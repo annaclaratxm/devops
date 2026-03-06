@@ -12,3 +12,7 @@ SRE é uma forma de cuidar dos sistemas em produção usando engenharia e automa
 Resumindo:
 - DevOps ajuda a entregar rápido.
 - SRE garante que continue funcionando bem depois que foi entregue.
+
+# Projeto DevOps
+## Descrição
+Este projeto consiste em uma aplicação web desenvolvida em React que realiza o cálculo de Índice de Massa Corporal (IMC) a partir do peso e altura informado pelo usuário. O objetivo do projeto é aplicar conceitos básicos de desenvolvimento frontend e integrar práticas utilizadas em DevOps.
