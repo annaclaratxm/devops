@@ -60,20 +60,20 @@ jobs:
 
       - name: Analyze Trivy results
         run: |
+          VULN_COUNT_MEDIUM=0
+          VULN_COUNT_HIGH=0
           if [ -f trivy-results.json ]; then
-            VULN_COUNT_MEDIUM=$(jq '[.Results[].Vulnerabilities[] | select(.Severity == "MEDIUM")] | length' trivy-results.json)
-            echo "Quantidade de vulnerabilidades mÃ©dias: $VULN_COUNT_MEDIUM"
-          fi
-          if [ -f trivy-results.json ]; then
-            VULN_COUNT_HIGH=$(jq '[.Results[].Vulnerabilities[] | select(.Severity == "HIGH")] | length' trivy-results.json)
+            VULN_COUNT_MEDIUM=$(jq '[(.Results // [])[] | (.Vulnerabilities // [])[] | select(.Severity == "MEDIUM")] | length' trivy-results.json)
+            echo "Quantidade de vulnerabilidades medias: $VULN_COUNT_MEDIUM"
+            VULN_COUNT_HIGH=$(jq '[(.Results // [])[] | (.Vulnerabilities // [])[] | select(.Severity == "HIGH")] | length' trivy-results.json)
             echo "Quantidade de vulnerabilidades altas: $VULN_COUNT_HIGH"
           fi
 
-          if [ "$VULN_COUNT_MEDIUM" -gt 5 ]; then
-             echo "Pipeline bloqueada: mais de 5 vulnerabilidades mÃ©dias encontradas."
+          if [ "${VULN_COUNT_MEDIUM:-0}" -gt 5 ]; then
+             echo "Pipeline bloqueada: mais de 5 vulnerabilidades medias encontradas."
              exit 1
            fi
-          if [ "$VULN_COUNT_HIGH" -gt 5 ]; then
+          if [ "${VULN_COUNT_HIGH:-0}" -gt 5 ]; then
              echo "Pipeline bloqueada: mais de 5 vulnerabilidades altas encontradas."
              exit 1
            fi
