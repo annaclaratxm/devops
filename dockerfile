@@ -1,8 +1,8 @@
-from node:20-alpine
-workdir /app
+FROM node:20-alpine
+WORKDIR /app
 COPY . .
-WORKDIR /app/devops-front
+WORKDIR /app/front
 RUN npm install
-run npm run build
-Expose 4173
-CMD ["npm", "run", "preview"]
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "run", "start"]
